@@ -1,0 +1,5 @@
+  - name: add ssh key for moji
+    tags: always
+    authorized_key:
+      user: moji
+      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPMSCt3kNL78qTMOBi12nidJIjO9JYFl0FhIBcSZPWB1 ansible"
