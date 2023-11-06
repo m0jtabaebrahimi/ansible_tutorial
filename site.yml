@@ -4,75 +4,36 @@
   become: true
   tasks:
 
-  - name: install updates (AlmaLinux)
+  - name: update repo cache (AlmaLinux)
+    tags: alway
     dnf:
-      update_only: yes
       update_cache: yes
+    changed_when: false
     when: ansible_distribution == "AlmaLinux"
 
   - name: install updates (Ubuntu)
+    tags: alway
     apt:
-      upgrade: yes
       update_cache: yes
+    changed_when: false
     when: ansible_distribution == "Ubuntu"
 
+- hosts: all
+  become: true
+  roles:
+    - base
+    
 - hosts: web_servers
   become: true
-  tasks:
-
-  - name: install apache & php packages (Ubuntu)
-    apt:
-      name:
-        -  apache2
-        -  libapache2-mod-php
-      state: latest
-    when: ansible_distribution == "Ubuntu"
-
-  - name: install apache & php packages (AlmaLinux)
-    dnf:
-      name:
-        -  httpd
-        -  php
-      state: latest
-    when: ansible_distribution == "AlmaLinux"
-
-  - name: start httpd service (Almalinux)
-    service:
-      name: httpd
-      state: started
-      enabled: yes
-    when: ansible_distribution == "AlmaLinux"
-
-  - name: copy default_site html file fot server
-    copy:
-      src: default_site.html
-      dest: /var/www/html/index.html
-      owner: root
-      group: root
-      mode: 0644
-
+  roles:
+    - web_servers
+ 
 - hosts: db_servers
   become: true
-  tasks:
-
-  - name: install mariadb package (Ubuntu)
-    apt:
-      name: mariadb-server
-      state: latest
-    when: ansible_distribution == "Ubuntu"
-
-  - name: install mariadb package (AlmaLinux)
-    dnf:
-      name: mariadb
-      state: latest
-    when: ansible_distribution == "AlmaLinux"
-    
+  roles:
+    - db_servers
+ 
 - hosts: file_servers
   become: true
-  tasks:
-  
-  - name: install samba package
-    package:
-      name: samba
-      state: latest
-
+  roles:
+    - file_servers
