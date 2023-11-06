@@ -1,0 +1,5 @@
+ - name: restart_sshd
+   tags: sshd
+   service:
+     name: sshd
+     state: restarted

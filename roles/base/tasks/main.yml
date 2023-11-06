@@ -1,5 +1,15 @@
-  - name: add ssh key for moji
-    tags: always
-    authorized_key:
-      user: moji
-      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPMSCt3kNL78qTMOBi12nidJIjO9JYFl0FhIBcSZPWB1 ansible"
+- name: add ssh key for moji
+  tags: always
+  authorized_key:
+    user: moji
+    key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPMSCt3kNL78qTMOBi12nidJIjO9JYFl0FhIBcSZPWB1 ansible"
+    
+- name: generate sshd_config file from template
+  tags: ssh
+  template:
+    src: "{{ ssh_template_file }}"
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart_sshd      
