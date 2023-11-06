@@ -3,3 +3,6 @@ apache_service: httpd
 php_package_name: php
 ssh_users: "ansible moji"
 ssh_template_file: sshd_config_almalinux.j2
+
+remote_ssh_user: moji
+remote_ssh_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINme9lISryzezPiLX7XNjqfcw2s/Y+AWkml/6ddldTAg ansible"
