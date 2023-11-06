@@ -1,3 +1,9 @@
+[web_servers]
 ubuntu1
+almalinux1
+
+[db_servers]
 ubuntu2
+
+[file_servers]
 ubuntu3
